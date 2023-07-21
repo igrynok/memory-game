@@ -20,19 +20,22 @@ class Board:
         self.open_cards = 0
 
     def add_player(self, player: Player):
-        self.players.append(Player)
+        self.players.append(player)
 
     def start(self):
         while self.open_cards != self.deck_size:
             player = self.players.popleft()
-            pair = player.play(self.get_closed_cards_indices(), self.display())
-            while self.cards[pair[0]] == self.cards[pair[1]] and self.open_cards != self.deck_size:
+            card1_id, card2_id = player.play(self.get_closed_cards_indices(), self.display())
+            print(self.display(card1_id, card2_id))
+            while self.cards[card1_id].value == self.cards[card2_id].value and self.open_cards != self.deck_size:
                 print(player.name, ' you scored 1 point!')
-                self.cards[pair[0]].is_open = True
-                self.cards[pair[1]].is_open = True
+                self.cards[card1_id].is_open = True
+                self.cards[card2_id].is_open = True
                 self.open_cards += 2
                 player.score += 1
-                pair = player.play(self.get_closed_cards_indices(), self.display())
+                if self.open_cards != self.deck_size:
+                    card1_id, card2_id = player.play(self.get_closed_cards_indices(), self.display())
+                print(self.display(card1_id, card2_id))
             self.players.append(player)
 
     def get_closed_cards_indices(self) -> List[int]:
@@ -45,10 +48,11 @@ class Board:
     def get_winner(self):
         pass
 
-    def display(self) -> str:
+    def display(self, card1_id=None, card2_id=None) -> str:
         out = ''
-        for card in self.cards:
-            if card.is_open:
+        for card_id, card in enumerate(self.cards):
+            if card.is_open or card_id == card1_id or card_id == card2_id:
                 out += str(card.value) + ' '
             else:
                 out += 'X '
+        return out
