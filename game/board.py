@@ -22,21 +22,22 @@ class Board:
     def add_player(self, player: Player):
         self.players.append(player)
 
-    def start(self):
-        while self.open_cards != self.deck_size:
-            player = self.players.popleft()
+    def start_game(self):
+        player = self.players.popleft()
+        while len(self.get_closed_cards_indices()) != 0:
             card1_id, card2_id = player.play(self.get_closed_cards_indices(), self.display())
             print(self.display(card1_id, card2_id))
-            while self.cards[card1_id].value == self.cards[card2_id].value and self.open_cards != self.deck_size:
-                print(player.name, ' you scored 1 point!')
+            if self.cards[card1_id].value == self.cards[card2_id].value:
+                print(player.name, 'you scored 1 point!')
                 self.cards[card1_id].is_open = True
                 self.cards[card2_id].is_open = True
                 self.open_cards += 2
                 player.score += 1
-                if self.open_cards != self.deck_size:
-                    card1_id, card2_id = player.play(self.get_closed_cards_indices(), self.display())
-                print(self.display(card1_id, card2_id))
-            self.players.append(player)
+            else:
+                print(player.name, 'better luck next time!')
+                self.players.append(player)
+                player = self.players.popleft()
+        self.players.append(player)
 
     def get_closed_cards_indices(self) -> List[int]:
         closed_cards = []

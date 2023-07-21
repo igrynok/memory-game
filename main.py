@@ -10,7 +10,7 @@ if __name__ == '__main__':
     board.add_player(p1)
     board.add_player(p2)
     print('Starting the game...')
-    board.start()
+    board.start_game()
     print('')
     print('Leaderboard:')
     for p in board.players:
