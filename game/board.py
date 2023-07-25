@@ -47,7 +47,9 @@ class Board:
         return closed_cards
 
     def get_winner(self):
-        pass
+        scores = [player.score for player in self.players]
+        index = scores.index(max(scores))
+        return self.players[index]
 
     def display(self, card1_id=None, card2_id=None) -> str:
         out = ''

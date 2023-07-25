@@ -15,3 +15,6 @@ if __name__ == '__main__':
     print('Leaderboard:')
     for p in board.players:
         print(f"{p.name}'s score: {p.score}")
+    winner = board.get_winner()
+    print(f'{winner.name} congrats, you win with the score {winner.score}')
+
