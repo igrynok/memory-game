@@ -1,5 +1,5 @@
-from game.board import Board
-from game.player import Player
+from game.model.board import Board
+from game.model.player import Player
 
 if __name__ == '__main__':
     print('Creating a board with 6 cards')

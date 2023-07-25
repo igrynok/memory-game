@@ -1,5 +1,5 @@
 import unittest
-from game.card import Card
+from game.model.card import Card
 
 
 class TestCard(unittest.TestCase):

@@ -1,5 +1,5 @@
 import unittest
-from game.player import Player
+from game.model.player import Player
 from unittest.mock import patch
 
 

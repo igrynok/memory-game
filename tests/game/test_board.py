@@ -1,8 +1,8 @@
 import unittest
 import random
 
-from game.board import Board
-from game.player import Player
+from game.model.board import Board
+from game.model.player import Player
 from unittest.mock import patch
 
 

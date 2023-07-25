@@ -1,7 +1,7 @@
 from typing import List
 
-from game.card import Card
-from game.player import Player
+from game.model.card import Card
+from game.model.player import Player
 from collections import deque
 import random
 
