@@ -27,16 +27,3 @@ class TestBoard(unittest.TestCase):
         board.add_player(Player('Tom'))
         board.add_player(Player('Mike'))
         self.assertEqual(len(board.players), 2)
-
-    def test_start_game(self):
-        board = Board(4)
-        board.add_player(Player('Tim'))
-        board.add_player(Player('Elsa'))
-
-        def mock_play(indices, deck):
-            return random.sample(indices, 2)
-
-        with patch.object(Player, 'play', side_effect=mock_play):
-            board.start_game()
-
-        self.assertEqual(board.open_cards, 4)

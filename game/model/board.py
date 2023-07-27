@@ -22,22 +22,8 @@ class Board:
     def add_player(self, player: Player):
         self.players.append(player)
 
-    def start_game(self):
-        player = self.players.popleft()
-        while len(self.get_closed_cards_indices()) != 0:
-            card1_id, card2_id = player.play(self.get_closed_cards_indices(), self.display())
-            print(self.display(card1_id, card2_id))
-            if self.cards[card1_id].value == self.cards[card2_id].value:
-                print(player.name, 'you scored 1 point!')
-                self.cards[card1_id].is_open = True
-                self.cards[card2_id].is_open = True
-                self.open_cards += 2
-                player.score += 1
-            else:
-                print(player.name, 'better luck next time!')
-                self.players.append(player)
-                player = self.players.popleft()
-        self.players.append(player)
+    def get_next_player(self):
+        return self.players.popleft()
 
     def get_closed_cards_indices(self) -> List[int]:
         closed_cards = []
@@ -51,11 +37,18 @@ class Board:
         index = scores.index(max(scores))
         return self.players[index]
 
-    def display(self, card1_id=None, card2_id=None) -> str:
-        out = ''
-        for card_id, card in enumerate(self.cards):
-            if card.is_open or card_id == card1_id or card_id == card2_id:
-                out += str(card.value) + ' '
-            else:
-                out += 'X '
-        return out
+    def open_cards_from_deck(self, card1_id, card2_id):
+        self.cards[card1_id].is_open = True
+        self.cards[card2_id].is_open = True
+        self.open_cards += 2
+
+    def close_cards_from_deck(self, card1_id, card2_id):
+        self.cards[card1_id].is_open = False
+        self.cards[card2_id].is_open = False
+        self.open_cards -= 2
+
+    def check_cards_equal(self, card1_id, card2_id):
+        return self.cards[card1_id].value == self.cards[card2_id].value
+
+    def add_player_to_queue(self, player):
+        self.players.append(player)
